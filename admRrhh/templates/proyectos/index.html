@@ -1,0 +1,128 @@
+{% extends "base.html" %} 
+
+{% block titulo %}Proyectos{% endblock %}
+{% block superior %}FORMULARIO DE PROYECTOS{% endblock %}
+{% block js %}
+<script>
+  function eliminarProy(id) {
+    Swal.fire({
+      "title": "¿ Estas seguro que deseas Eliminar el Registro?",
+      "text": "¡ No podras revertir esto!",
+      "icon": "warning",
+      "showCancelButton": true,
+      "confirmButtonColor": "#d33",
+      "cancelButtonColor": true,
+      "confirmButtonText": " Si, Eliminar ", 
+      "cancelButtonText": " Cancelar ",      
+    })
+    .then(function(result) {
+      if (result.isConfirmed){ 
+        window.location.href="/proy_Delete/" +id+ " "
+      }
+    })
+    
+  }
+</script> 
+{% endblock %}
+{% block contenido %}
+<div class="d-md-flex justify-content-md-home">
+  <form action="#" method="GET">
+      <div class="btn-group">
+          <input type="text"name="buscar"class="form-control">
+          <input type="submit"value="Buscar"class="btn btn-primary">
+
+      </div>
+  </form>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <a
+          href="{% url 'proy_Nuevo' %}"
+          class="btn btn-primary"
+          style="float: right"
+          >Nuevo Registro</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card shadow mb-4">
+  <!--aqui va la cabecera de los titulos de cada formulario -->
+  
+
+  <div class="card-body">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead class="btn-success">
+            <tr>
+              <th><center>#</center></th>
+              <th><center>Proyecto</center></th>
+              <th><center>Fiscal C.R.E.</center></th>
+              <th><center>Grafo</center></th>
+              <th><center>Ubicacion</center></th>
+              <th><center>Nota</center></th>
+              <th><center>Fecha de Recepcion</center></th>
+              <th><center>Fecha de Diseño</center></th>
+              <th><center>Fecha de Construccion</center></th>
+              <th><center>Acciones</center></th>
+              <th><center>Estados</center></th>
+            </tr>
+          </thead>
+          <tfoot class="btn-success">
+            <tr>
+              <th><center>#</center></th>
+              <th><center>Proyecto</center></th>
+              <th><center>Fiscal C.R.E.</center></th>
+              <th><center>Grafo</center></th>
+              <th><center>Ubicacion</center></th>
+              <th><center>Nota</center></th>
+              <th><center>Fecha de Recepcion</center></th>
+              <th><center>Fecha de Diseño</center></th>
+              <th><center>Fecha de Construccion</center></th>
+              <th><center>Acciones</center></th>
+              <th><center>Estados</center></th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for proyecto in proyectos %}
+              {% if proyecto.estado_proy == 1 %}
+                {% for fiscal in fiscales %}
+                  {% if fiscal.id == proyecto.fiscal_proy_id %}
+                    <tr>
+                      <td>{{proyecto.id}}</td>
+                      <td>{{proyecto.nombre_proy}}</td>
+                      <td>{{fiscal.nombre_fis}}</td>
+                      <td>{{proyecto.grafo_proy}}</td>
+                      <td>{{proyecto.ubicacion_proy}}</td>
+                      <td>{{proyecto.nota_proy}}</td>
+                      <td>{{proyecto.fecha_recep_proy}}</td>
+                      <td>{{proyecto.fecha_diseñ_proy}}</td>
+                      <td>{{proyecto.fecha_const_proy}}</td>
+                      <td>
+                        <center>
+                          
+                        <a class="btn btn-primary btn-sm " href="{% url 'proy_Editar' proyecto.id %}">Editar</a>
+                        |
+                        <a class="btn btn-danger btn-sm " href="#" onclick="eliminarProy({{ proyecto.id }})">Eliminar</a>
+                        </center>
+                      </td>
+                     
+                    </tr>
+                  {% endif %}
+                {% endfor %}  
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>  
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block encabezadofor %} Formulario registro {% endblock  %}
+{% block contenido %} 
+<div class="card shadow mb-4">
+    <!-- creacion del container para la entrada de datos -->
+    <div class="container p-2 my-2 border">
+      <div class="row justify-content-center">
+        <form action="{% url 'profGuardar' %}" method="POST">
+          {% csrf_token %}
+          
+          <div class="row">
+            <div class="col-sm-12">
+                <label for="exampleFormControlInput1" class="form-label">Profesión</label>
+                <input type="text" class="text-uppercase form-control" name="nombre_prof" autofocus placeholder=""required>
+            </div>
+          </div> 
+            <br>
+          <!-- creacion de los botones de registro -->
+          <div class="row">
+            <div class="col-md-6">
+                <input type="submit" class="btn btn-primary btn-sm " value="GUARDAR">
+            </div>
+            
+            <div class="col-md-6">
+                  <a class="btn btn-dark btn-sm " href="{% url 'profLista' %}">CANCELAR</a>
+            </div>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+    
+  </div>
+{% endblock  %}

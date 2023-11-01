@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block encabezadofor %} 
+Formulario editar
+{% endblock %}
+{% block contenido %}
+<div class="card shadow mb-4">
+  <!-- creacion del container para la entrada de datos -->
+  <div class="container p-2 my-2 border">
+    <div class="row justify-content-center">
+      <form action="{% url 'perlActualizar' codigo.id %}" method="POST">
+        {% csrf_token %}
+        
+        <div class="row">
+          <div class="col-sm-3">
+            <label for="exampleFormControlInput1" class="form-label">Persona</label>
+                <select  name="persona_perl" id="inputpersona_perl"   class="form-control" required>
+                  {% for persona in personas %}
+                    {% if persona.id == codigo.persona_perl_id %}
+                      <option value="{{ persona.id }}">{{ persona.nombre_per }}</option>
+                      {% for persona in personas %}
+                        {% if persona.estado_per == 1 %}
+                          <option value="{{ persona.id }}">{{ persona.nombre_per }}</option>
+                        {% endif %}    
+                      {% endfor %}  
+                    {% endif %} 
+                  {% endfor %}
+                </select>
+          </div>
+          <div class="col-sm-2">
+            <label for="exampleFormControlInput1" class="form-label">Area</label>
+                <select  name="area_perl" id="inputarea_perl"   class="form-control" required>
+                  {% for area in areas %}
+                    {% if area.id == codigo.area_perl_id %}
+                      <option value="{{ area.id }}">{{ area.nombre_are }}</option>
+                      {% for area in areas %}
+                        {% if area.estado_are == 1 %}
+                          <option value="{{ area.id }}">{{ area.nombre_are }}</option>
+                        {% endif %}    
+                      {% endfor %}  
+                    {% endif %} 
+                  {% endfor %}
+                </select>
+          </div>
+          <div class="col-sm-2">
+            <label for="exampleFormControlInput1" class="form-label">Cargo</label>
+                <select  name="cargo_perl" id="inputcargo_perl"   class="form-control" required>
+                  {% for cargo in cargos %}
+                    {% if cargo.id == codigo.cargo_perl_id %}
+                      <option value="{{ cargo.id }}">{{ cargo.nombre_carg }}</option>
+                      {% for cargo in cargos %}
+                        {% if cargo.estado_carg == 1 %}
+                          <option value="{{ cargo.id }}">{{ cargo.nombre_carg }}</option>
+                        {% endif %}    
+                      {% endfor %}  
+                    {% endif %} 
+                  {% endfor %}
+                </select>
+          </div>
+          <div class="col-sm-2">
+            <label for="exampleFormControlInput1" class="form-label">Estudio</label>
+                <select  name="estudio_perl" id="inputestudio_perl"   class="form-control" required>
+                  {% for estudio in estudios %}
+                    {% if estudio.id == codigo.estudio_perl_id %}
+                      <option value="{{ estudio.id }}">{{ estudio.nombre_est }}</option>
+                      {% for estudio in estudios %}
+                        {% if estudio.estado_est == 1 %}
+                          <option value="{{ estudio.id }}">{{ estudio.nombre_est }}</option>
+                        {% endif %}    
+                      {% endfor %}  
+                    {% endif %} 
+                  {% endfor %}
+                </select>
+          </div>
+          <div class="col-sm-3">
+            <label for="exampleFormControlInput1" class="form-label">Profesion</label>
+                <select  name="profesion_perl" id="inputprofesion_perl"   class="form-control" required>
+                  {% for profesion in profesiones %}
+                    {% if profesion.id == codigo.profesion_perl_id %}
+                      <option value="{{ profesion.id }}">{{ profesion.nombre_prof }}</option>
+                      {% for profesion in profesiones %}
+                        {% if profesion.estado_prof == 1 %}
+                          <option value="{{ profesion.id }}">{{ profesion.nombre_prof }}</option>
+                        {% endif %}    
+                      {% endfor %}  
+                    {% endif %} 
+                  {% endfor %}
+                </select>
+          </div>
+        </div>
+          <br>  
+        <br>
+        <!-- creacion de los botones de registro -->
+        <div class="row">
+          <div class="col-md-6">
+              <input type="submit" class="btn btn-primary btn-sm "style="float: right" value="GUARDAR">
+          </div>
+          
+          <div class="col-md-6">
+                <a class="btn btn-dark btn-sm " href="{% url 'perlLista' %}">CANCELAR</a>
+          </div>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block encabezado %}<p><center>! Lista de persona ¡</center></p>{% endblock %}
+{% block encabezadofor %} Gestion personal  {% endblock  %}
+{% block js %}
+<script>
+  function eliminarPersonal(id) {
+    Swal.fire({
+      "title": "¿ Estas seguro que deseas Eliminar el Registro?",
+      "text": "¡ No podras revertir esto!",
+      "icon": "warning",
+      "showCancelButton": true,
+      "confirmButtonColor": "#d33",
+      "cancelButtonColor": true,
+      "confirmButtonText": " Si, Eliminar ", 
+      "cancelButtonText": " Cancelar ",      
+    })
+    .then(function(result) {
+      if (result.isConfirmed){ 
+        window.location.href="/perlEliminar/" +id+ " "
+      }
+    })
+    
+  }
+</script> 
+{% endblock %}
+{% block contenido %} 
+<div class="d-md-flex justify-content-md-home">
+  <form action="#" method="GET">
+      <div class="btn-group">
+          <input type="text"name="buscar"class="form-control" autofocus>
+          <input type="submit"value="Buscar"class="btn btn-primary">
+
+      </div>
+  </form>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <a
+          href="{% url 'perlCrear' %}"
+          class="btn btn-primary"
+          style="float: right"
+          >Nuevo Registro</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card shadow mb-4">
+  <!--aqui va la cabecera de los titulos de cada formulario -->
+
+  <div class="card-body">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div class="table-responsive">
+        <table
+          class="table table-striped"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th><center>#</center></th>
+              <th><center>Area</center></th>
+              <th><center>Cargo</center></th>
+              <th><center>Estudio</center></th>
+              <th><center>Profesion</center></th>
+              <th><center>Acciones</center></th>
+            </tr>
+          </thead>
+          
+          <tbody>
+            {% for personal in personales %}
+              {% if personal.estado_perl == 1 %}
+                {% for area in areas %}
+                  {% if area.id == personal.area_perl_id %}
+                    {% for cargo in cargos %}
+                      {% if cargo.id == personal.cargo_perl_id %}
+                        {% for estudio in estudios %}
+                          {% if estudio.id == personal.estudio_perl_id %}
+                            {% for profesion in profesiones %}
+                              {% if profesion.id == personal.profesion_perl_id %}
+                                <tr>
+                                  <td>{{personal.id}}</td>
+                                  <td>{{area.nombre_are}}</td>
+                                  <td>{{cargo.nombre_carg}}</td>
+                                  <td>{{estudio.nombre_est}}</td>
+                                  <td>{{profesion.nombre_prof}}</td>
+                                  <td>
+                                    <center>
+                                      <a class="btn btn-primary btn-small " href="{% url 'perlEditar' personal.id %}"><i class="fas fa-pen"></i></a>
+                                      |
+                                      <a class="btn btn-danger btn-small " href="#" onclick="eliminarPersonal({{ personal.id }})"><i class="fas fa-trash"></i></a>
+                                    </center>
+                                  </td>
+                                </tr>
+                              {% endif %}
+                            {% endfor %}
+                          {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+        <div> 
+          {% include 'paginator.html' %}
+        </div>
+      </div>
+    </div>  
+  </div>
+</div>
+{% endblock  %}
+

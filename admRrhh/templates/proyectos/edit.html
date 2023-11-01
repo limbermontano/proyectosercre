@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block titulo %}Fiscal{% endblock %}
+{% block superior %}
+FORMULARIO DE ACTUALIZACION DE FISCALES C.R.E.
+{% endblock %}
+{% block contenido %}
+
+  <div class="card shadow mb-4">
+    <!-- creacion del container para la entrada de datos -->
+    <div class="container p-2 my-2 border">
+      <div class="row justify-content-center">
+        <form action="{% url 'proy_Update' codigo.id %}" method="POST">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-sm-6">
+                <label for="exampleFormControlInput1" class="form-label">Proyecto</label>
+                <input type="text" class="text-uppercase form-control border-left-dark" name="nombre_proy" value="{{codigo.nombre_proy}}" placeholder=""required>
+            </div>
+            <div class="col-sm-6">
+            <label for="exampleFormControlInput1" class="form-label">Fiscal</label>
+            <select  name="fis_proy" id="inputfis_proy"   class="form-control" required>
+              {% for fiscal in fiscales %}
+                {% if fiscal.id == codigo.fiscal_proy_id %}
+                  <option value="{{ fiscal.id }}">{{ fiscal.nombre_fis }}</option>
+                  {% for fiscal in fiscales %}
+                    {% if fiscal.estado_fis == 1 %}
+                      <option value="{{ fiscal.id }}">{{ fiscal.nombre_fis }}</option>
+                    {% endif %}    
+                  {% endfor %}  
+                {% endif %} 
+              {% endfor %}
+            </select>
+            </div>
+            
+            <div class="col-md-6">
+                <label for="exampleFormControlInput1" class="form-label">Grafo</label>
+                <input type="text" class="form-control text-uppercase border-left-dark " name="grafo_proy" value="{{codigo.grafo_proy}}" placeholder=""required>
+            </div>
+          </div> 
+          
+          <div class="row">
+              <div class="col-md-6">
+                  <label for="exampleFormControlInput1" class="form-label">Ubicacion/Zona</label>
+                  <input type="text" class="form-control text-uppercase border-left-dark " name="ubicacion_proy" value="{{codigo.ubicacion_proy}}"placeholder="">
+              </div>
+              <div class="col-md-6">
+                  <label for="exampleFormControlInput1" class="form-label">Fecha de Recepcion de Proyecto</label>
+                  <input type="date" class="form-control text-uppercase border-left-dark " name="fecha_recep_proy" value="{{codigo.fecha_recep_proy}}"placeholder=""required>
+              </div>
+          </div> 
+
+          <div class="row">
+              <div class="col-md-6">
+                  <label for="exampleFormControlInput1" class="form-label">Fecha de Diseño</label>
+                  <input type="date" class="form-control text-uppercase border-left-dark " name="fecha_diseñ_proy" value="{{codigo.fecha_diseñ_proy}}"placeholder=""required>
+              </div>
+              <div class="col-md-6">
+                  <label for="exampleFormControlInput1" class="form-label">Fecha de Construccion</label>
+                  <input type="date" class="form-control text-uppercase border-left-dark " name="fecha_const_proy"value="{{codigo.fecha_const_proy}}" placeholder=""required>
+              </div>
+          </div> 
+          
+          <div class="row">
+              <div class="col-md-12">
+                  <label for="exampleFormControlInput1" class="form-label">Nota/Observacion</label>
+                  <input type="text" class="form-control text-uppercase border-left-dark " name="nota_proy"value="{{codigo.nota_proy}}" placeholder="">
+              </div>
+              
+          </div> 
+          <br>
+          
+          <!-- creacion de los botones de registro -->
+          <div class="row">
+            <div class="col-md-6">
+              <input type="submit" class="btn btn-primary btn-sm " value="EDITAR">
+            </div>
+            <div class="col-md-6">
+              <a class="btn btn-dark btn-sm " href="{% url 'proyectos' %}">CANCELAR</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
